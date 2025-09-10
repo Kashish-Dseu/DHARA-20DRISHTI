@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export default function Schedule(){
+export default function Schedule() {
   const [events, setEvents] = useState<any[]>([]);
 
-  useEffect(()=>{
-    fetch('/api/sensors').then(r=>r.json()).then(d=>setEvents(d.upcoming || []));
-  },[]);
+  useEffect(() => {
+    fetch("/api/sensors")
+      .then((r) => r.json())
+      .then((d) => setEvents(d.upcoming || []));
+  }, []);
 
   return (
     <div>
@@ -24,13 +32,27 @@ export default function Schedule(){
           <CardContent>
             <ul className="space-y-3">
               {events.map((ev: any) => (
-                <li key={ev.id} className="flex items-center justify-between rounded-md border p-3">
+                <li
+                  key={ev.id}
+                  className="flex items-center justify-between rounded-md border p-3"
+                >
                   <div>
                     <p className="font-medium">{ev.zone}</p>
-                    <p className="text-sm text-muted-foreground">{new Date(ev.scheduledAt).toLocaleString()} • {ev.durationMinutes} min</p>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(ev.scheduledAt).toLocaleString()} •{" "}
+                      {ev.durationMinutes} min
+                    </p>
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="ghost" onClick={()=>{alert('Reschedule flow not implemented in demo')}}>Reschedule</Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        alert("Reschedule flow not implemented in demo");
+                      }}
+                    >
+                      Reschedule
+                    </Button>
                   </div>
                 </li>
               ))}

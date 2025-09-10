@@ -1,21 +1,35 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { handleReports } from "@/../server/routes/reports"; // not used, but keep typesafe import avoidance
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Tooltip as RTooltip } from "recharts";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  CartesianGrid,
+  Tooltip as RTooltip,
+} from "recharts";
 
 function useReports() {
   return useQuery({
     queryKey: ["reports"],
     queryFn: async () => {
-      const res = await fetch('/api/reports');
-      if(!res.ok) throw new Error('Failed');
+      const res = await fetch("/api/reports");
+      if (!res.ok) throw new Error("Failed");
       return res.json();
-    }
+    },
   });
 }
 
-export default function DataInsights(){
+export default function DataInsights() {
   const { data } = useReports();
   const monthly = data?.monthly ?? [];
 
@@ -38,7 +52,12 @@ export default function DataInsights(){
                 <XAxis dataKey="month" />
                 <YAxis />
                 <RTooltip />
-                <Line type="monotone" dataKey="waterSavedLiters" stroke="hsl(var(--primary))" strokeWidth={2} />
+                <Line
+                  type="monotone"
+                  dataKey="waterSavedLiters"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -56,7 +75,12 @@ export default function DataInsights(){
                 <XAxis dataKey="month" />
                 <YAxis />
                 <RTooltip />
-                <Line type="monotone" dataKey="energySavedKwh" stroke="#16a34a" strokeWidth={2} />
+                <Line
+                  type="monotone"
+                  dataKey="energySavedKwh"
+                  stroke="#16a34a"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -67,21 +91,35 @@ export default function DataInsights(){
         <Card>
           <CardHeader>
             <CardTitle>Summary</CardTitle>
-            <CardDescription>Aggregated savings and estimated yield benefits</CardDescription>
+            <CardDescription>
+              Aggregated savings and estimated yield benefits
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-4">
               <div className="p-3 border rounded-md">
-                <p className="text-sm text-muted-foreground">Total Water Saved</p>
-                <p className="font-bold">{data?.totals?.waterSavedLiters ?? 0} L</p>
+                <p className="text-sm text-muted-foreground">
+                  Total Water Saved
+                </p>
+                <p className="font-bold">
+                  {data?.totals?.waterSavedLiters ?? 0} L
+                </p>
               </div>
               <div className="p-3 border rounded-md">
-                <p className="text-sm text-muted-foreground">Total Energy Saved</p>
-                <p className="font-bold">{data?.totals?.energySavedKwh ?? 0} kWh</p>
+                <p className="text-sm text-muted-foreground">
+                  Total Energy Saved
+                </p>
+                <p className="font-bold">
+                  {data?.totals?.energySavedKwh ?? 0} kWh
+                </p>
               </div>
               <div className="p-3 border rounded-md">
-                <p className="text-sm text-muted-foreground">Avg Yield Benefit</p>
-                <p className="font-bold">{data?.totals?.yieldBenefitPercentAvg ?? 0}%</p>
+                <p className="text-sm text-muted-foreground">
+                  Avg Yield Benefit
+                </p>
+                <p className="font-bold">
+                  {data?.totals?.yieldBenefitPercentAvg ?? 0}%
+                </p>
               </div>
             </div>
           </CardContent>
