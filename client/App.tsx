@@ -8,6 +8,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Layout from "@/components/Layout";
+import ControlPanel from "./pages/ControlPanel";
+import DataInsights from "./pages/DataInsights";
+import Schedule from "./pages/Schedule";
+import SensorSetup from "./pages/SensorSetup";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -18,9 +24,15 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Index />} />
+            <Route path="control" element={<ControlPanel />} />
+            <Route path="insights" element={<DataInsights />} />
+            <Route path="schedule" element={<Schedule />} />
+            <Route path="sensors" element={<SensorSetup />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
