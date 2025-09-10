@@ -14,6 +14,7 @@ import DataInsights from "./pages/DataInsights";
 import Schedule from "./pages/Schedule";
 import SensorSetup from "./pages/SensorSetup";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 
