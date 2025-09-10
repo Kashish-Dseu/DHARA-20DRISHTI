@@ -2,8 +2,25 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { Droplets } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+
+function useSensors() {
+  return useQuery({
+    queryKey: ["sensors-global"],
+    queryFn: async () => {
+      const res = await fetch('/api/sensors');
+      if(!res.ok) throw new Error('Failed');
+      return res.json();
+    },
+    refetchInterval: 5000,
+    staleTime: 3000,
+  });
+}
 
 export default function Layout() {
+  const { data } = useSensors();
+  const soil = data?.soilMoisture;
+
   return (
     <div className="min-h-screen bg-base grid grid-cols-[260px_1fr]">
       <aside className="hidden md:flex flex-col bg-sidebar p-5 gap-6 border-r">
@@ -36,8 +53,18 @@ export default function Layout() {
             <li>
               <NavLink to="/login" className="rounded-md px-3 py-2 hover:bg-accent block">Login</NavLink>
             </li>
+            <li>
+              <NavLink to="/register" className="rounded-md px-3 py-2 hover:bg-accent block">Register</NavLink>
+            </li>
           </ul>
         </nav>
+
+        <div className="mt-auto text-sm">
+          <div className="px-3 py-2 rounded-md bg-white/5">
+            <p className="text-xs text-muted-foreground">Soil moisture</p>
+            <p className="font-semibold text-lg">{typeof soil === 'number' ? `${soil}%` : '--'}</p>
+          </div>
+        </div>
       </aside>
 
       <main className="p-4 md:p-8">
