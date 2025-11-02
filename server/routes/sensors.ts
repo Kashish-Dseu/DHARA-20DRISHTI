@@ -49,7 +49,14 @@ export function setIrrigation(state: boolean) {
 
 export function delayNextEvent(minutes: number) {
   scheduledEvents = scheduledEvents.map((ev, idx) =>
-    idx === 0 ? { ...ev, scheduledAt: new Date(new Date(ev.scheduledAt).getTime() + minutes * 60000).toISOString() } : ev,
+    idx === 0
+      ? {
+          ...ev,
+          scheduledAt: new Date(
+            new Date(ev.scheduledAt).getTime() + minutes * 60000,
+          ).toISOString(),
+        }
+      : ev,
   );
 }
 

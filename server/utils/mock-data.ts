@@ -93,10 +93,19 @@ export function generateAlerts(): Array<{
   const alertMessages = [
     { msg: "Low battery level at sensor Zone 2", severity: "warning" as const },
     { msg: "Soil moisture is low in Zone 1", severity: "critical" as const },
-    { msg: "Sensor Zone 3 reconnected successfully", severity: "info" as const },
+    {
+      msg: "Sensor Zone 3 reconnected successfully",
+      severity: "info" as const,
+    },
     { msg: "Water tank level below 50%", severity: "warning" as const },
-    { msg: "High temperature detected - irrigation triggered", severity: "info" as const },
-    { msg: "Sensor calibration needed for Zone 1", severity: "warning" as const },
+    {
+      msg: "High temperature detected - irrigation triggered",
+      severity: "info" as const,
+    },
+    {
+      msg: "Sensor calibration needed for Zone 1",
+      severity: "warning" as const,
+    },
   ];
 
   const selected = alertMessages.slice(0, generateRandomNumber(2, 4));
@@ -105,7 +114,9 @@ export function generateAlerts(): Array<{
     id: `a${idx + 1}`,
     severity: alert.severity,
     message: alert.msg,
-    createdAt: new Date(Date.now() - generateRandomNumber(5, 120) * 1000 * 60).toISOString(),
+    createdAt: new Date(
+      Date.now() - generateRandomNumber(5, 120) * 1000 * 60,
+    ).toISOString(),
   }));
 }
 
@@ -115,7 +126,20 @@ export function generateMonthlyReports(): Array<{
   energySavedKwh: number;
   yieldBenefitPercent: number;
 }> {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const now = new Date();
   const currentMonth = now.getMonth();
 

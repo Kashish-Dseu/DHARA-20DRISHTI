@@ -14,7 +14,9 @@ export const handleReports: RequestHandler = (_req, res) => {
     },
     { waterSavedLiters: 0, energySavedKwh: 0, yieldBenefitPercentAvg: 0 },
   );
-  totals.yieldBenefitPercentAvg = parseFloat((totals.yieldBenefitPercentAvg / monthly.length).toFixed(1));
+  totals.yieldBenefitPercentAvg = parseFloat(
+    (totals.yieldBenefitPercentAvg / monthly.length).toFixed(1),
+  );
 
   const response: ReportsResponse = { monthly, totals };
   res.json(response);
